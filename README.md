@@ -1,1 +1,1 @@
-Raw daily SQL practice queries.
+Daily SQL Practice
