@@ -44,3 +44,47 @@ FROM orders
 GROUP BY customer_id
 ORDER BY order_count DESC
 LIMIT 1;
+
+-- Day 6: Classic SQL Interview Problems
+
+-- Find the highest order amount
+-- (Using MAX)
+
+SELECT MAX(amount) AS highest_order
+FROM orders;
+
+-- Find the second highest order amount
+-- (Using ORDER BY + LIMIT)
+
+SELECT DISTINCT amount
+FROM orders
+ORDER BY amount DESC
+LIMIT 1 OFFSET 1;
+
+-- Find total spending per customer
+-- (JOIN + SUM + GROUP BY)
+
+SELECT c.customer_id, c.name, SUM(o.amount) AS total_spent
+FROM customers c
+INNER JOIN orders o
+ON c.customer_id = o.customer_id
+GROUP BY c.customer_id, c.name;
+
+-- Find customers who placed more than one order
+-- (GROUP BY + HAVING)
+
+SELECT customer_id, COUNT(*) AS order_count
+FROM orders
+GROUP BY customer_id
+HAVING COUNT(*) > 1;
+
+-- Find the customer who spent the most
+-- (JOIN + GROUP BY + ORDER BY + LIMIT)
+
+SELECT c.customer_id, c.name, SUM(o.amount) AS total_spent
+FROM customers c
+INNER JOIN orders o
+ON c.customer_id = o.customer_id
+GROUP BY c.customer_id, c.name
+ORDER BY total_spent DESC
+LIMIT 1;
